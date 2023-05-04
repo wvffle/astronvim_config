@@ -6,4 +6,21 @@ return {
 
   -- { import = "astrocommunity.colorscheme.catppuccin" },
   -- { import = "astrocommunity.completion.copilot-lua-cmp" },
+  
+  -- Language support
+  { import = "astrocommunity.pack.vue" },
+  { import = "astrocommunity.pack.typescript" },
+  { import = "astrocommunity.pack.yaml" },
+  { import = "astrocommunity.pack.json" },
+  { import = "astrocommunity.pack.rust" },
+  { import = "astrocommunity.pack.bash" },
+  { import = "astrocommunity.pack.python" },
+  { import = "astrocommunity.pack.markdown" },
+
+  -- Time Tracking
+  { import = "astrocommunity.media.vim-wakatime" },
+
+  -- Other Stuff
+  { import = "astrocommunity.terminal-integration.flatten-nvim" },
+  { import = "astrocommunity.code-runner.overseer-nvim" },
 }
