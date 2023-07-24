@@ -10,15 +10,10 @@ return {
     skip_prompts = false, -- skip prompts about breaking changes
     show_changelog = true, -- show the changelog after performing an update
     auto_quit = false, -- automatically quit the current session after a successful update
-    remotes = { -- easily add new remotes to track
-      --   ["remote_name"] = "https://remote_url.come/repo.git", -- full remote url
-      --   ["remote2"] = "github_user/repo", -- GitHub user/repo shortcut,
-      --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
-    },
   },
 
   -- Set colorscheme to use
-  colorscheme = "astrodark",
+  colorscheme = "ayu",
 
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
@@ -42,6 +37,7 @@ return {
       disabled = { -- disable formatting capabilities for the listed language servers
         -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
         -- "lua_ls",
+        "volar"
       },
       timeout_ms = 1000, -- default format timeout
       -- filter = function(client) -- fully override the default formatting function
@@ -50,7 +46,7 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      -- "pyright"
+      "volar",
     },
   },
 
@@ -69,17 +65,23 @@ return {
   -- augroups/autocommands and custom filetypes also this just pure lua so
   -- anything that doesn't fit in the normal config locations above can go here
   polish = function()
-    -- Set up custom filetypes
-    -- vim.filetype.add {
-    --   extension = {
-    --     foo = "fooscript",
-    --   },
-    --   filename = {
-    --     ["Foofile"] = "fooscript",
-    --   },
-    --   pattern = {
-    --     ["~/%.config/foo/.*"] = "fooscript",
-    --   },
-    -- }
+
+    -- Set font for Neovide
+    if vim.g.neovide then
+      vim.o.guifont = "CaskaydiaCove NF Light:h10"
+    end
+
+    -- Use Volar takeover mode over tsserver
+    local lspconfig = require 'lspconfig'
+    lspconfig.volar.setup {
+      filetypes = { 'typescript', 'javascript', 'javascriptreact', 'typescriptreact', 'vue', 'json' },
+    }
+
+    -- Disable tsserver in favor of Volar's takeover mode
+    lspconfig.tsserver.setup {
+      single_file_support = false,
+      filetypes = {},
+      autostart = false,
+    }
   end,
 }
